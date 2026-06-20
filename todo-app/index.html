@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flow — Your Tasks, Beautifully Organized</title>
+  <meta name="description" content="Flow is a premium task manager to plan your day, track progress, and stay focused — fast, offline-first, and built for clarity." />
+  <meta name="theme-color" content="#0F0F15" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph / social preview -->
+  <meta property="og:title" content="Flow — Your Tasks, Beautifully Organized" />
+  <meta property="og:description" content="A premium, offline-first task manager with smart filters, drag-and-drop, and a dashboard you'll actually enjoy looking at." />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicon (inline SVG — no external asset needed) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230F0F15'/%3E%3Ctext x='50' y='66' font-size='54' text-anchor='middle' fill='%236C5CE7'%3E%E2%97%86%3C/text%3E%3C/svg%3E" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body data-theme="dark">
+
+  <noscript>
+    <div style="padding:24px;font-family:sans-serif;text-align:center;">
+      Flow needs JavaScript enabled to run. Please enable it in your browser settings.
+    </div>
+  </noscript>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ===================== APP SHELL ===================== -->
+  <div class="app-shell">
+
+    <!-- ============ SIDEBAR (desktop) / BOTTOM NAV (mobile) ============ -->
+    <aside class="sidebar" aria-label="Main navigation">
+      <div class="sidebar__brand">
+        <span class="brand-mark" aria-hidden="true">◆</span>
+        <span class="brand-name">Flow</span>
+      </div>
+
+      <nav class="sidebar__nav">
+        <button class="nav-item is-active" data-filter="all" type="button">
+          <span class="nav-item__icon" aria-hidden="true">☰</span>
+          <span class="nav-item__label">All Tasks</span>
+        </button>
+        <button class="nav-item" data-filter="today" type="button">
+          <span class="nav-item__icon" aria-hidden="true">☀</span>
+          <span class="nav-item__label">Today</span>
+        </button>
+        <button class="nav-item" data-filter="pending" type="button">
+          <span class="nav-item__icon" aria-hidden="true">○</span>
+          <span class="nav-item__label">Pending</span>
+        </button>
+        <button class="nav-item" data-filter="completed" type="button">
+          <span class="nav-item__icon" aria-hidden="true">✓</span>
+          <span class="nav-item__label">Completed</span>
+        </button>
+      </nav>
+
+      <button class="theme-toggle" type="button" aria-label="Toggle dark and light mode">
+        <span class="theme-toggle__icon" aria-hidden="true">☾</span>
+        <span class="theme-toggle__label">Dark Mode</span>
+      </button>
+    </aside>
+
+    <!-- ============ MAIN CONTENT ============ -->
+    <main class="main" id="main-content" tabindex="-1">
+
+      <!-- ---- Dashboard Header ---- -->
+      <header class="dashboard-header">
+        <div class="dashboard-header__greeting">
+          <p class="dashboard-header__date" id="current-date">—</p>
+          <h1 class="dashboard-header__title" id="greeting-text">Good evening 👋</h1>
+          <p class="dashboard-header__subtitle">Here's what's on your plate today.</p>
+        </div>
+
+        <div class="dashboard-header__search">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input
+            type="search"
+            id="search-input"
+            class="search-input"
+            placeholder="Search tasks…"
+            aria-label="Search tasks"
+          />
+          <kbd class="search-kbd">/</kbd>
+        </div>
+      </header>
+
+      <!-- ---- Stats Row ---- -->
+      <section class="stats-row" aria-label="Task statistics">
+
+        <div class="progress-ring-card">
+          <div class="progress-ring" id="progress-ring" role="img" aria-label="Completion progress">
+            <svg viewBox="0 0 120 120" class="progress-ring__svg">
+              <defs>
+                <linearGradient id="ring-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#6C5CE7" />
+                  <stop offset="100%" stop-color="#9C8FFF" />
+                </linearGradient>
+              </defs>
+              <circle class="progress-ring__track" cx="60" cy="60" r="52" />
+              <circle class="progress-ring__fill" id="progress-ring-fill" cx="60" cy="60" r="52" />
+            </svg>
+            <div class="progress-ring__center">
+              <span class="progress-ring__value" id="progress-value">0%</span>
+              <span class="progress-ring__caption">Done</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-chip">
+          <span class="stat-chip__icon stat-chip__icon--total" aria-hidden="true">▤</span>
+          <div class="stat-chip__text">
+            <span class="stat-chip__value" id="stat-total">0</span>
+            <span class="stat-chip__label">Total Tasks</span>
+          </div>
+        </div>
+
+        <div class="stat-chip">
+          <span class="stat-chip__icon stat-chip__icon--pending" aria-hidden="true">○</span>
+          <div class="stat-chip__text">
+            <span class="stat-chip__value" id="stat-pending">0</span>
+            <span class="stat-chip__label">Pending</span>
+          </div>
+        </div>
+
+        <div class="stat-chip">
+          <span class="stat-chip__icon stat-chip__icon--completed" aria-hidden="true">✓</span>
+          <div class="stat-chip__text">
+            <span class="stat-chip__value" id="stat-completed">0</span>
+            <span class="stat-chip__label">Completed</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---- Toolbar: Add / Filter / Sort ---- -->
+      <section class="toolbar">
+        <button class="btn btn--primary" id="add-task-btn" type="button" title="Add Task (N)">
+          <span aria-hidden="true">+</span> Add Task
+        </button>
+
+        <div class="toolbar__controls">
+          <select class="select" id="filter-priority" aria-label="Filter by priority">
+            <option value="all">All Priorities</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+
+          <select class="select" id="sort-tasks" aria-label="Sort tasks">
+            <option value="created">Newest First</option>
+            <option value="due">Due Date</option>
+            <option value="priority">Priority</option>
+            <option value="alpha">A → Z</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- ---- Task List ---- -->
+      <section class="task-section" aria-label="Task list">
+        <ul class="task-list" id="task-list"></ul>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="empty-state" hidden>
+          <div class="empty-state__art" aria-hidden="true">✦</div>
+          <h3 class="empty-state__title">Nothing here yet</h3>
+          <p class="empty-state__text">Add your first task and start building momentum.</p>
+          <button class="btn btn--primary" id="empty-state-add-btn" type="button">+ Add Task</button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===================== TASK MODAL (Add/Edit) ===================== -->
+  <div class="modal-overlay" id="task-modal-overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal__header">
+        <h2 class="modal__title" id="modal-title">Add Task</h2>
+        <button class="modal__close" id="modal-close-btn" type="button" aria-label="Close">✕</button>
+      </div>
+
+      <form class="modal__form" id="task-form">
+        <div class="form-group">
+          <label for="task-title">Title</label>
+          <input type="text" id="task-title" placeholder="e.g. Finish landing page design" maxlength="120" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="task-priority">Priority</label>
+            <select id="task-priority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="task-due">Due Date</label>
+            <input type="date" id="task-due" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="task-category">Category</label>
+          <input type="text" id="task-category" placeholder="e.g. Work, Personal, Study" maxlength="40" />
+        </div>
+
+        <div class="form-group">
+          <label for="task-notes">Notes</label>
+          <textarea id="task-notes" rows="3" placeholder="Add details…" maxlength="500"></textarea>
+        </div>
+
+        <div class="modal__actions">
+          <button type="button" class="btn btn--ghost" id="modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn btn--primary" id="modal-save-btn">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================== CONFIRM DIALOG ===================== -->
+  <div class="modal-overlay" id="confirm-overlay" hidden>
+    <div class="modal modal--small" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-text">
+      <h2 class="modal__title" id="confirm-title">Delete this task?</h2>
+      <p class="modal__text" id="confirm-text">This action can't be undone.</p>
+      <div class="modal__actions">
+        <button class="btn btn--ghost" id="confirm-cancel-btn" type="button">Cancel</button>
+        <button class="btn btn--danger" id="confirm-delete-btn" type="button">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TOAST CONTAINER ===================== -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ===================== CONFETTI CANVAS ===================== -->
+  <canvas id="confetti-canvas" class="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
