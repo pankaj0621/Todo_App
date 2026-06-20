@@ -1,0 +1,11 @@
+{
+  "name": "flow-todo-app",
+  "version": "1.0.0",
+  "description": "A premium, framework-free todo application — vanilla HTML5/CSS3/ES6+ with localStorage persistence.",
+  "private": true,
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": ["todo", "task-manager", "vanilla-js", "productivity"],
+  "license": "MIT"
+}
